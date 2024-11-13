@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:stylesyncapp/screens/find_your_designer.dart';
+import 'package:stylesyncapp/screens/homepage.dart';
+import 'package:stylesyncapp/screens/my-profile.dart';
+import 'package:stylesyncapp/screens/searchDesigner.dart';
+
+class BottomBar extends StatefulWidget {
+  int passedIndex;
+  BottomBar({
+    super.key,
+    this.passedIndex = 0,
+  });
+
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    int selectedIndex = widget.passedIndex;
+  }
+
+  void onTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  static final List<Widget> _screens = <Widget>[
+    const HomePage(),
+    const FindYourDesigner(),
+    const SearchDesigner(),
+    const MyProfile(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: IndexedStack(
+        index: selectedIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.design_services,
+              color: Colors.black,
+            ),
+            label: 'Find My Designer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
+            label: 'Search Designer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            label: 'My Profile',
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: Colors.black,
+        onTap: onTapped,
+      ),
+    );
+  }
+}
