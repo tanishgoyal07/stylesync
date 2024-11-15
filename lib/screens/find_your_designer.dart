@@ -115,7 +115,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
           ),
         ),
         backgroundColor:
-            const Color.fromARGB(255, 158, 119, 107), // Pastel brown
+            const Color.fromARGB(255, 158, 119, 107),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -154,7 +154,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
                   child: ElevatedButton(
                     onPressed: _submitPreferences,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8D6E63), // Pastel brown
+                      backgroundColor: const Color(0xFF8D6E63),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(

@@ -6,7 +6,7 @@ class Customer {
   final String email;
   final String password;
   final String contact;
-  final String age;
+  final int age;
   final String gender;
 
   Customer({
@@ -26,7 +26,7 @@ class Customer {
       email: map['email'] as String,
       password: map['password'] as String,
       contact: map['contact'] as String,
-      age: map['age'] as String,
+      age: map['age'] as int,
       gender: map['gender'] as String,
     );
   }
@@ -53,7 +53,7 @@ class Customer {
     String? email,
     String? password,
     String? contact,
-    String? age,
+    int? age,
     String? gender,
   }) {
     return Customer(

@@ -26,20 +26,26 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Future<void> _loadUserData() async {
-    final data = await SharedPrefsHelper.getCustomerData();
-    print("heree");
-    print(data);
-    if (data == null) {
-      final designerData = await SharedPrefsHelper.getDesignerData();
+    try {
+      final customerData = await SharedPrefsHelper.getCustomerData();
+      if (customerData != null) {
+        setState(() {
+          isDesigner = false;
+          userData = customerData['customer'];
+        });
+      } else {
+        final designerData = await SharedPrefsHelper.getDesignerData();
+        if (designerData != null) {
+          setState(() {
+            isDesigner = true;
+            userData = designerData['designer'];
+          });
+        }
+      }
+    } catch (e) {
+      print("Error loading user data: $e");
+    } finally {
       setState(() {
-        isDesigner = true;
-        userData = designerData;
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isDesigner = false;
-        userData = data;
         isLoading = false;
       });
     }
@@ -47,6 +53,14 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     if (userData == null) {
       return Scaffold(
         body: Column(
@@ -132,7 +146,7 @@ class _MyProfileState extends State<MyProfile> {
     }
 
     return isDesigner
-        ? DesignerProfileScreen(designer: Designer.fromMap(userData ?? {}))
-        : CustomerProfileScreen(customer: Customer.fromMap(userData ?? {}));
+        ? DesignerProfileScreen(designer: Designer.fromMap(userData!), isLoggedInDesigner: true,)
+        : CustomerProfileScreen(customer: Customer.fromMap(userData!));
   }
 }

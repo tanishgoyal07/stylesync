@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stylesyncapp/screens/auth/signup_screen.dart';
+import 'package:stylesyncapp/services/local_storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +10,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final customerData = await SharedPrefsHelper.getCustomerData();
+      if (customerData != null) {
+        setState(() {
+          isLoggedIn = true;
+        });
+      } else {
+        final designerData = await SharedPrefsHelper.getDesignerData();
+        if (designerData != null) {
+          setState(() {
+            isLoggedIn = true;
+          });
+        }
+      }
+    } catch (e) {
+      print("Error loading user data: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,119 +58,98 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              "assets/hompage_app.png",
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Are you looking for a dress or designing one?',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Option Boxes
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: isLoggedIn
+            ? Image.asset(
+                "assets/hompage_app.png",
+                fit: BoxFit.cover,
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Option 1 Box
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OptionOnePage(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 158, 119, 107),
-                        borderRadius: BorderRadius.circular(8),
+                  Image.asset(
+                    "assets/hompage_app.png",
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Are you looking for a dress or designing one?',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.brown,
                       ),
-                      child: const Text(
-                        'I am a Designer',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  // Option 2 Box
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OptionTwoPage(),
+                  const SizedBox(height: 20),
+                  // Option Boxes
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Option 1 Box
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupScreen(
+                                  isDesigner: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 158, 119, 107),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              'I am a Designer',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 158, 119, 107),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        'I am a Customer',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                        // Option 2 Box
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupScreen(
+                                  isDesigner: false,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 158, 119, 107),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              'I am a Customer',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 40),
                 ],
               ),
-            ),
-            const SizedBox(height: 40),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Separate page for Option 1
-class OptionOnePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Designer Collaboration'),
-      ),
-      body: const Center(
-        child: Text('Explore Designer Collaboration!'),
-      ),
-    );
-  }
-}
-
-// Separate page for Option 2
-class OptionTwoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Outfit'),
-      ),
-      body: const Center(
-        child: Text('Create Your Custom Outfit!'),
       ),
     );
   }

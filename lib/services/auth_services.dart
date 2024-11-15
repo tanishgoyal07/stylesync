@@ -62,4 +62,21 @@ class AuthService {
           jsonDecode(response.body)['error'] ?? 'Something went wrong');
     }
   }
+
+  Future<void> logout(String token) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/auth/logout'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception(
+          jsonDecode(response.body)['error'] ?? 'Failed to log out');
+    }
+  }
 }
