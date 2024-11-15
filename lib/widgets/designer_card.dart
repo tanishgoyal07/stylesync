@@ -15,7 +15,7 @@ class DesignerCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      color: const Color(0xFFFFFDE7), // Light cream color
+      color: const Color(0xFFFFFDE7),
       elevation: 4,
       child: InkWell(
         onTap: onTap,

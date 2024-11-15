@@ -1,4 +1,4 @@
-id,name,availability,age-group,expert-category,expert-subCategory,experienced-in,averagePricing,total-customers-served,image_url
+id,name,availability,ageGroup,expertCategory,expertSubCategory,experiencedIn,averagePricing,totalCustomersServed,imageUrl
 1,Rahul Kumar,Yes,"Men,Women,Kids","Formal,Casual","Topwear,Bottomwear,Apparel Set","Cotton fabrics,Rayon fabrics,Blazers,Tops,Trousers,Kurtas,Suits",4201,51,https://randomuser.me/api/portraits/men/59.jpg
 2,Aishwarya Rani,Yes,"Women,Girls,Senior citizen","Ethnic,Smart-Casual","Saree,Dress,Loungewear","Silk fabrics,Georgette fabrics,Lehengas,Gowns,Nightdresses,Dresses",9352,19,https://randomuser.me/api/portraits/women/68.jpg
 3,Kunal Jain,Yes,"Men,Boys","Sports,Formal","Topwear,Bottomwear","Wool fabrics,Nylon fabrics,Jackets,Tops,Trousers,Sweaters,Tights",1187,98,https://randomuser.me/api/portraits/men/76.jpg
