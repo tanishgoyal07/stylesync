@@ -20,9 +20,37 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
   double age = 25;
   double amount = 1000;
 
-  final List<String> usageOptions = ['Casual', 'Formal', 'Ethnic', 'Sports', 'Smart-Casual'];
-  final List<String> categoryOptions = ['Topwear', 'Bottomwear', 'Nightwear', 'Loungewear', 'Innerwear', 'Saree', 'Dress'];
-  final List<String> articleTypeOptions = ['Dresses', 'Tshirts', 'Trousers', 'Tops', 'Shirts', 'Jeans', 'Kurtas', 'Jackets', 'Shorts'];
+  final List<String> usageOptions = [
+    'Casual',
+    'Formal',
+    'Ethnic',
+    'Sports',
+    'Smart-Casual'
+  ];
+
+  final List<String> categoryOptions = [
+    'Topwear',
+    'Bottomwear',
+    'Nightwear',
+    'Loungewear',
+    'Innerwear',
+    'Saree',
+    'Dress'
+  ];
+
+  final List<String> articleTypeOptions = [
+    'Dresses',
+    'Tshirts',
+    'Trousers',
+    'Tops',
+    'Shirts',
+    'Jeans',
+    'Kurtas',
+    'Jackets',
+    'Shorts',
+    'Saree'
+  ];
+
   final List<String> genderOptions = ['Men', 'Women'];
 
   void _resetForm() {
@@ -51,13 +79,17 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
       };
 
       try {
-        final response = await recommendationService.getRecommendedDesigners(userPreferences);
+        final response = await recommendationService
+            .getRecommendedDesigners(userPreferences);
         if (response['status'] == 'success') {
           _resetForm();
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => RecommendedDesigners(designers: response['data'], userPreferences: userPreferences,),
+              builder: (context) => RecommendedDesigners(
+                designers: response['data'],
+                userPreferences: userPreferences,
+              ),
             ),
           );
         } else {
@@ -75,8 +107,15 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Find My Designer')),
-        backgroundColor: Colors.teal,
+        automaticallyImplyLeading: false,
+        title: const Center(
+          child: Text(
+            'Find My Designer',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        backgroundColor:
+            const Color.fromARGB(255, 158, 119, 107), // Pastel brown
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -115,8 +154,9 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
                   child: ElevatedButton(
                     onPressed: _submitPreferences,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: const Color(0xFF8D6E63), // Pastel brown
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -135,21 +175,27 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     );
   }
 
-  Widget _buildDropdownField(String label, List<String> options, ValueChanged<String?> onChanged, String initialValue) {
+  Widget _buildDropdownField(String label, List<String> options,
+      ValueChanged<String?> onChanged, String initialValue) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text(label,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
           value: initialValue,
-          items: options.map((option) => DropdownMenuItem(value: option, child: Text(option))).toList(),
+          items: options
+              .map((option) =>
+                  DropdownMenuItem(value: option, child: Text(option)))
+              .toList(),
           onChanged: onChanged,
           validator: (value) => value == null ? 'Please select a $label' : null,
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             filled: true,
-            fillColor: Colors.teal.withOpacity(0.1),
+            fillColor:
+                const Color(0xFFF8BBD0).withOpacity(0.2), // Light pastel pink
           ),
         ),
       ],
@@ -160,15 +206,17 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Article Type', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text('Article Type',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
             if (textEditingValue.text.isEmpty) {
               return const Iterable<String>.empty();
             }
-            return articleTypeOptions.where((option) =>
-                option.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+            return articleTypeOptions.where((option) => option
+                .toLowerCase()
+                .contains(textEditingValue.text.toLowerCase()));
           },
           onSelected: (String selection) {
             setState(() {
@@ -176,18 +224,20 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
             });
           },
           fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-            // controller.text = articleType;
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
               decoration: InputDecoration(
                 hintText: 'Select or type your article type',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 filled: true,
-                fillColor: Colors.teal.withOpacity(0.1),
+                fillColor: const Color(0xFFF8BBD0).withOpacity(0.2),
               ),
               onSaved: (value) => articleType = value ?? '',
-              validator: (value) => value == null || value.isEmpty ? 'Please enter or select an article type' : null,
+              validator: (value) => value == null || value.isEmpty
+                  ? 'Please enter or select an article type'
+                  : null,
             );
           },
         ),
@@ -199,7 +249,8 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Age', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text('Age',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -214,13 +265,16 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.teal.shade100,
+                  color: const Color(0xFFFFE0B2)
+                      .withOpacity(0.5), // Light pastel peach
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.teal, width: 2),
+                  border: Border.all(
+                      color: const Color(0xFF8D6E63), width: 2), // Pastel brown
                 ),
                 child: Text(
                   '$age',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -238,7 +292,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
   Widget _buildRoundButton(IconData icon, VoidCallback onPressed) {
     return CircleAvatar(
       radius: 20,
-      backgroundColor: Colors.teal,
+      backgroundColor: const Color(0xFF8D6E63), // Pastel brown
       child: IconButton(
         icon: Icon(icon, color: Colors.white),
         onPressed: onPressed,
@@ -253,8 +307,10 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Budget', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            Text('₹${amount.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16)),
+            const Text('Budget',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text('₹${amount.toStringAsFixed(0)}',
+                style: const TextStyle(fontSize: 16)),
           ],
         ),
         Slider(
@@ -263,8 +319,9 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
           max: 50000,
           divisions: 100,
           label: '₹${amount.toStringAsFixed(0)}',
-          activeColor: Colors.teal,
-          inactiveColor: Colors.teal.shade100,
+          activeColor: const Color(0xFF8D6E63), // Pastel brown
+          inactiveColor:
+              const Color(0xFFFFE0B2).withOpacity(0.5), // Light pastel peach
           onChanged: (value) {
             setState(() {
               amount = value;

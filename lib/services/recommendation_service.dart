@@ -1,7 +1,7 @@
 // lib/recommendation_service.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:stylesyncapp/constants.dart';
+import 'package:stylesyncapp/utils/constants.dart';
 
 class RecommendationService {
   Future<Map<String, dynamic>> getRecommendedDesigners(Map<String, dynamic> userPreferences) async {

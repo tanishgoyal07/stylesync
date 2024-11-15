@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/screens/find_your_designer.dart';
 import 'package:stylesyncapp/screens/homepage.dart';
-import 'package:stylesyncapp/screens/my-profile.dart';
+import 'package:stylesyncapp/screens/profile/profile_screen.dart';
 import 'package:stylesyncapp/screens/searchDesigner.dart';
 
 class BottomBar extends StatefulWidget {
@@ -33,7 +33,7 @@ class _BottomBarState extends State<BottomBar> {
   static final List<Widget> _screens = <Widget>[
     const HomePage(),
     const FindYourDesigner(),
-    const SearchDesigner(),
+    const SearchDesignerScreen(),
     const MyProfile(),
   ];
 
@@ -46,7 +46,8 @@ class _BottomBarState extends State<BottomBar> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color.fromARGB(255, 158, 119, 107),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(

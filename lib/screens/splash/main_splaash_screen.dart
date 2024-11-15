@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stylesyncapp/screens/indicators.dart';
+import 'package:stylesyncapp/screens/splash/indicators.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/models/designer-model.dart';
-import 'package:stylesyncapp/screens/designer_profile.dart';
+import 'package:stylesyncapp/screens/profile/designer_profile.dart';
+import 'package:stylesyncapp/widgets/designer_card.dart';
 
 class RecommendedDesigners extends StatelessWidget {
   final List<dynamic> designers;
@@ -18,14 +19,25 @@ class RecommendedDesigners extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text('Recommended Designers'),
+        title: const Text(
+          'Recommended Designers',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor:
+            const Color.fromARGB(255, 158, 119, 107), // Pastel brown
       ),
       body: Column(
         children: [
           _UserPreferencesCard(userPreferences: userPreferences),
           Expanded(
             child: designers.isEmpty
-                ? const Center(child: Text('No recommendations found for you.'))
+                ? const Center(
+                    child: Text(
+                      'No recommendations found for you.',
+                      style:
+                          TextStyle(color: Color(0xFF6D4C41)), // Pastel brown
+                    ),
+                  )
                 : ListView.builder(
                     itemCount: designers.length,
                     itemBuilder: (context, index) {
@@ -50,7 +62,7 @@ class RecommendedDesigners extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal.shade300,
+                backgroundColor: const Color(0xFF8EBC90),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
@@ -63,9 +75,10 @@ class RecommendedDesigners extends StatelessWidget {
               child: const Text(
                 'Go Back to Preferences',
                 style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -88,7 +101,7 @@ class _UserPreferencesCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: const Color.fromARGB(255, 210, 215, 230),
+        color: const Color(0xFFFBD4D4), // Pastel pink
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -96,7 +109,7 @@ class _UserPreferencesCard extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  'Your Preferences',
+                  '• Your Preferences',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -106,19 +119,20 @@ class _UserPreferencesCard extends StatelessWidget {
               ),
               const SizedBox(height: 14),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _preferenceItem('Usage', userPreferences['usage']),
                   _preferenceItem('Category', userPreferences['category']),
-                  _preferenceItem('Article Type', userPreferences['articleType']),
+                  _preferenceItem(
+                      'Article Type', userPreferences['articleType']),
                 ],
               ),
               const SizedBox(height: 8),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _preferenceItem('Gender', userPreferences['gender']),
-                   _preferenceItem('Age', userPreferences['age']),
+                  _preferenceItem('Age', userPreferences['age']),
                   _preferenceItem('Budget', '₨ ${userPreferences['amount']}'),
                 ],
               ),
@@ -134,9 +148,9 @@ class _UserPreferencesCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          title,
+          '• $title',
           style: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Colors.black54,
           ),
@@ -145,98 +159,11 @@ class _UserPreferencesCard extends StatelessWidget {
         Text(
           value != null ? value.toString() : 'N/A',
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             color: Colors.black87,
           ),
         ),
       ],
-    );
-  }
-}
-
-class DesignerCard extends StatelessWidget {
-  final Map<String, dynamic> designerData;
-  final VoidCallback onTap;
-
-  const DesignerCard({
-    Key? key,
-    required this.designerData,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 4,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(15),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 35,
-                backgroundImage: designerData['image_url'] != null
-                    ? NetworkImage(designerData['image_url'])
-                    : const AssetImage('assets/default_avatar.png')
-                        as ImageProvider,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      designerData['name'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.teal,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      designerData['expert-category'] ?? 'No category',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.teal.shade700,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      designerData['experienced-in'] ?? 'No expertise listed',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Avg. Cost',
-                    style: TextStyle(fontSize: 10, color: Colors.grey),
-                  ),
-                  Text(
-                    '₨ ${designerData['averagePricing'] ?? 0}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

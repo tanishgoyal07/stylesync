@@ -1,43 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:stylesyncapp/models/customer-model.dart';
+import 'package:stylesyncapp/screens/auth/signup_screen.dart';
+import 'package:stylesyncapp/screens/profile/cutomer_profile.dart';
+import 'package:stylesyncapp/screens/profile/designer_profile.dart';
+import 'package:stylesyncapp/services/local_storage.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../../models/designer-model.dart';
+
+class MyProfile extends StatefulWidget {
+  const MyProfile({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MyProfileState extends State<MyProfile> {
+  bool isLoading = true;
+  bool isDesigner = false;
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final data = await SharedPrefsHelper.getCustomerData();
+    print("heree");
+    print(data);
+    if (data == null) {
+      final designerData = await SharedPrefsHelper.getDesignerData();
+      setState(() {
+        isDesigner = true;
+        userData = designerData;
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isDesigner = false;
+        userData = data;
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFD8D9A3), // Light pastel green background
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor:
-            const Color.fromARGB(255, 158, 119, 107), // White app bar
-        elevation: 0.0,
-        centerTitle: true,
-        title: const Text(
-          'StyleSync',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white, // Text color for contrast on white background
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+    if (userData == null) {
+      return Scaffold(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/hompage_app.png",
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 20),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
                 'Are you looking for a dress or designing one?',
                 style: TextStyle(
@@ -49,26 +66,26 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 20),
-            // Option Boxes
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Option 1 Box
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OptionOnePage(),
+                          builder: (context) => const SignupScreen(
+                            isDesigner: true,
+                          ),
                         ),
                       );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 158, 119, 107),
+                        color: Colors.brown[200],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
@@ -80,20 +97,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  // Option 2 Box
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OptionTwoPage(),
+                          builder: (context) => const SignupScreen(
+                            isDesigner: false,
+                          ),
                         ),
                       );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 158, 119, 107),
+                        color: Colors.brown[200],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
@@ -108,40 +126,13 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 40),
           ],
         ),
-      ),
-    );
-  }
-}
+      );
+    }
 
-// Separate page for Option 1
-class OptionOnePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Designer Collaboration'),
-      ),
-      body: const Center(
-        child: Text('Explore Designer Collaboration!'),
-      ),
-    );
-  }
-}
-
-// Separate page for Option 2
-class OptionTwoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Outfit'),
-      ),
-      body: const Center(
-        child: Text('Create Your Custom Outfit!'),
-      ),
-    );
+    return isDesigner
+        ? DesignerProfileScreen(designer: Designer.fromMap(userData ?? {}))
+        : CustomerProfileScreen(customer: Customer.fromMap(userData ?? {}));
   }
 }
