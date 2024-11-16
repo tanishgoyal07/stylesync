@@ -1,8 +1,7 @@
 const express = require("express");
 const logoutRouter = express.Router();
-const { verifyToken } = require("../middleware/authMiddleware");
 
-logoutRouter.post("/api/auth/logout", verifyToken, (req, res) => {
+logoutRouter.post("/api/auth/logout", (req, res) => {
   try {
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {

@@ -72,7 +72,7 @@ class AuthService {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 401) {
       return;
     } else {
       throw Exception(

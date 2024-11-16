@@ -15,7 +15,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
 
   String usage = 'Casual';
   String category = 'Topwear';
-  String articleType = 'Dresses';
+  String articleType = '';
   String gender = 'Men';
   double age = 25;
   double amount = 1000;
@@ -38,20 +38,18 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     'Dress'
   ];
 
-  final List<String> articleTypeOptions = [
-    'Dresses',
-    'Tshirts',
-    'Trousers',
-    'Tops',
-    'Shirts',
-    'Jeans',
-    'Kurtas',
-    'Jackets',
-    'Shorts',
-    'Saree'
-  ];
+  final Map<String, List<String>> articleTypeMapping = {
+    'Topwear': ['Tshirts', 'Tops', 'Shirts', 'Jackets'],
+    'Bottomwear': ['Trousers', 'Jeans', 'Shorts'],
+    'Nightwear': ['Nightgowns', 'Pajamas'],
+    'Loungewear': ['Sweatshirts', 'Hoodies'],
+    'Innerwear': ['Undergarments', 'Vests'],
+    'Saree': ['Saree'],
+    'Dress': ['Dresses'],
+  };
 
-  final List<String> genderOptions = ['Men', 'Women'];
+  List<String> get filteredArticleTypeOptions =>
+      articleTypeMapping[category] ?? [];
 
   void _resetForm() {
     _formKey.currentState?.reset();
@@ -114,8 +112,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        backgroundColor:
-            const Color.fromARGB(255, 158, 119, 107),
+        backgroundColor: const Color.fromARGB(255, 158, 119, 107),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -135,6 +132,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
                 _buildDropdownField('Category', categoryOptions, (value) {
                   setState(() {
                     category = value!;
+                    articleType = '';
                   });
                 }, category),
                 const SizedBox(height: 20),
@@ -142,7 +140,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
                 const SizedBox(height: 20),
                 _buildAgeIncrementer(),
                 const SizedBox(height: 20),
-                _buildDropdownField('Gender', genderOptions, (value) {
+                _buildDropdownField('Gender', ['Men', 'Women'], (value) {
                   setState(() {
                     gender = value!;
                   });
@@ -195,7 +193,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             filled: true,
             fillColor:
-                const Color(0xFFF8BBD0).withOpacity(0.2), // Light pastel pink
+                const Color(0xFFF8BBD0).withOpacity(0.2),
           ),
         ),
       ],
@@ -214,7 +212,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
             if (textEditingValue.text.isEmpty) {
               return const Iterable<String>.empty();
             }
-            return articleTypeOptions.where((option) => option
+            return filteredArticleTypeOptions.where((option) => option
                 .toLowerCase()
                 .contains(textEditingValue.text.toLowerCase()));
           },
@@ -266,10 +264,10 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFE0B2)
-                      .withOpacity(0.5), // Light pastel peach
+                      .withOpacity(0.5), 
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
-                      color: const Color(0xFF8D6E63), width: 2), // Pastel brown
+                      color: const Color(0xFF8D6E63), width: 2),
                 ),
                 child: Text(
                   '$age',
@@ -292,7 +290,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
   Widget _buildRoundButton(IconData icon, VoidCallback onPressed) {
     return CircleAvatar(
       radius: 20,
-      backgroundColor: const Color(0xFF8D6E63), // Pastel brown
+      backgroundColor: const Color(0xFF8D6E63),
       child: IconButton(
         icon: Icon(icon, color: Colors.white),
         onPressed: onPressed,
@@ -304,29 +302,25 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Budget',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            Text('₹${amount.toStringAsFixed(0)}',
-                style: const TextStyle(fontSize: 16)),
-          ],
-        ),
+        const Text('Budget',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
         Slider(
           value: amount,
-          min: 1000,
-          max: 50000,
-          divisions: 100,
-          label: '₹${amount.toStringAsFixed(0)}',
-          activeColor: const Color(0xFF8D6E63), // Pastel brown
-          inactiveColor:
-              const Color(0xFFFFE0B2).withOpacity(0.5), // Light pastel peach
           onChanged: (value) {
             setState(() {
               amount = value;
             });
           },
+          min: 500,
+          max: 50000,
+          divisions: 95,
+          activeColor: const Color(0xFF8D6E63),
+          label: '\$${amount.toStringAsFixed(0)}',
+        ),
+        Text(
+          '₹${amount.toStringAsFixed(0)}',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ],
     );
