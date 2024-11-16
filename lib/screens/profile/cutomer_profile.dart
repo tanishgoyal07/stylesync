@@ -142,6 +142,12 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
+        title: 'Gender',
+        value: widget.customer.gender.toString(),
+        titleColor: const Color(0xFF8D6E63),
+        valueColor: const Color(0xFF6D4C41),
+      ),
+      DetailItem(
         title: 'Contact',
         value: widget.customer.contact,
         titleColor: const Color(0xFF8D6E63),
