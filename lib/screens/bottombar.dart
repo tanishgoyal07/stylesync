@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/screens/find_your_designer.dart';
 import 'package:stylesyncapp/screens/homepage.dart';
+import 'package:stylesyncapp/screens/product/product_screen.dart';
 import 'package:stylesyncapp/screens/profile/profile_screen.dart';
 import 'package:stylesyncapp/screens/searchDesigner.dart';
 
@@ -34,6 +35,7 @@ class _BottomBarState extends State<BottomBar> {
     const HomePage(),
     const FindYourDesigner(),
     const SearchDesignerScreen(),
+    const ProductScreen(),
     const MyProfile(),
   ];
 
@@ -69,6 +71,13 @@ class _BottomBarState extends State<BottomBar> {
               color: Colors.black,
             ),
             label: 'Search Designer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_bag,
+              color: Colors.black,
+            ),
+            label: 'Clothing',
           ),
           BottomNavigationBarItem(
             icon: Icon(

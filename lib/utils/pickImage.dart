@@ -18,4 +18,18 @@ class ImageSelector {
     }
     return null;
   }
+
+  Future<List<File>> selectMultipleImages() async {
+    try {
+      final pickedFiles = await _picker.pickMultiImage();
+      if (pickedFiles != null && pickedFiles.isNotEmpty) {
+        return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+      } else {
+        debugPrint("No images selected");
+      }
+    } catch (e) {
+      debugPrint("Error selecting images: $e");
+    }
+    return [];
+  }
 }

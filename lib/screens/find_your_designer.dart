@@ -34,6 +34,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     'Nightwear',
     'Loungewear',
     'Innerwear',
+    'Apparel Set',
     'Saree',
     'Dress'
   ];
@@ -44,8 +45,9 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     'Nightwear': ['Nightgowns', 'Pajamas'],
     'Loungewear': ['Sweatshirts', 'Hoodies'],
     'Innerwear': ['Undergarments', 'Vests'],
-    'Saree': ['Saree'],
-    'Dress': ['Dresses'],
+    'Apparel Set': ['Apparel Set'],
+    'Saree': ['Saree', 'Mirror work', 'Sequinned', 'ready to wear', 'kanjeevaram', 'banarasi', 'chanderi', 'kota', 'floral', 'orgenza', 'party'],
+    'Dress': ['Party-dress', 'Casual', 'Minis', 'Midis', 'Fit Flare', 'Bodycons', 'Wrap Dresses', 'Maxi dress', 'Cotton A-line'],
   };
 
   List<String> get filteredArticleTypeOptions =>
@@ -204,7 +206,7 @@ class _FindYourDesignerState extends State<FindYourDesigner> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Article Type',
+        const Text('Article and Material Type',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Autocomplete<String>(

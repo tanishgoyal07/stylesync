@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stylesyncapp/models/designer-model.dart';
 import 'package:stylesyncapp/screens/bottombar.dart';
 import 'package:stylesyncapp/services/auth_services.dart';
 import 'package:stylesyncapp/services/image_service.dart';
@@ -7,21 +6,23 @@ import 'package:stylesyncapp/services/local_storage.dart';
 import 'package:stylesyncapp/widgets/detail-item.dart';
 import 'package:stylesyncapp/widgets/portfolio_carousel.dart';
 
-class DesignerProfileScreen extends StatefulWidget {
-  final Designer designer;
+class RecommendedDesignerProfileScreen extends StatefulWidget {
+  final Map<String, dynamic> designer;
   bool? isLoggedInDesigner;
 
-  DesignerProfileScreen({
+  RecommendedDesignerProfileScreen({
     super.key,
     required this.designer,
     this.isLoggedInDesigner,
   });
 
   @override
-  State<DesignerProfileScreen> createState() => _DesignerProfileScreenState();
+  State<RecommendedDesignerProfileScreen> createState() =>
+      _RecommendedDesignerProfileScreenState();
 }
 
-class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
+class _RecommendedDesignerProfileScreenState
+    extends State<RecommendedDesignerProfileScreen> {
   Future<Map<String, List<String>>>? portfolioImages;
 
   @override
@@ -32,7 +33,10 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
 
   Future<Map<String, List<String>>> fetchPortfolioImages() async {
     final experienceList =
-        widget.designer.experiencedIn.split(",").map((e) => e.trim()).toList();
+        _getStringFromListOrString(widget.designer['experiencedIn'])
+            .split(",")
+            .map((e) => e.trim())
+            .toList();
 
     final Map<String, List<String>> imagesByCategory = {};
     for (var category in experienceList) {
@@ -84,7 +88,7 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          widget.designer.name,
+          widget.designer['name'],
           style: const TextStyle(color: Colors.white),
           overflow: TextOverflow.ellipsis,
         ),
@@ -100,14 +104,14 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
               Center(
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: NetworkImage(widget.designer.imageUrl),
+                  backgroundImage: NetworkImage(widget.designer['imageUrl']),
                   backgroundColor: const Color(0xFFFFE0B2).withOpacity(0.5),
                 ),
               ),
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  widget.designer.name,
+                  widget.designer['name'],
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -117,10 +121,13 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              widget.designer.email.isNotEmpty
-                  ? Center(
+              _getStringFromListOrString(widget.designer['email']) == ''
+                  ? const SizedBox(
+                      height: 0,
+                    )
+                  : Center(
                       child: Text(
-                        widget.designer.email,
+                        _getStringFromListOrString(widget.designer['email']),
                         style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xFFFFCCBC),
@@ -128,17 +135,16 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    )
-                  : Container(),
+                    ),
               const SizedBox(height: 8),
               Center(
                 child: Text(
-                  widget.designer.availability == "Yes"
+                  widget.designer['availability'] == "Yes"
                       ? 'Available'
                       : 'Not Available',
                   style: TextStyle(
                     fontSize: 16,
-                    color: widget.designer.availability == "Yes"
+                    color: widget.designer['availability'] == "Yes"
                         ? const Color(0xFFA5D6A7)
                         : const Color(0xFFFFABAB),
                     fontWeight: FontWeight.w500,
@@ -223,40 +229,48 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
     return [
       DetailItem(
         title: 'Age Group',
-        value: widget.designer.ageGroup,
+        value: _getStringFromListOrString(widget.designer['ageGroup']),
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
         title: 'Expert Category',
-        value: widget.designer.expertCategory,
+        value: _getStringFromListOrString(widget.designer['expertCategory']),
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
         title: 'Expert Sub-Category',
-        value: widget.designer.expertSubCategory,
+        value: _getStringFromListOrString(widget.designer['expertSubCategory']),
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
         title: 'Experienced In',
-        value: widget.designer.experiencedIn,
+        value: _getStringFromListOrString(widget.designer['experiencedIn']),
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
         title: 'Average Pricing',
-        value: '₨ ${widget.designer.averagePricing.toStringAsFixed(2)}',
+        value: '₨ ${widget.designer['averagePricing'].toStringAsFixed(2)}',
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
       DetailItem(
         title: 'Total Customers Served',
-        value: '${widget.designer.totalCustomersServed}',
+        value: '${widget.designer['totalCustomersServed']}',
         titleColor: const Color(0xFF8D6E63),
         valueColor: const Color(0xFF6D4C41),
       ),
     ];
+  }
+
+  String _getStringFromListOrString(dynamic value) {
+    if (value == null) return '';
+    if (value is List) {
+      return value.join(', ');
+    }
+    return value.toString();
   }
 }

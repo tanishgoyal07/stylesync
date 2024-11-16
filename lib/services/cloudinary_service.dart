@@ -20,4 +20,24 @@ class CloudinaryService {
     }
     return "";
   }
+
+  Future<List<String>> uploadMultipleImages(BuildContext context, List<File> images) async {
+  List<String> uploadedUrls = [];
+
+  try {
+    final cloudinary = CloudinaryPublic(cloudName, uploadPreset);
+
+    for (File image in images) {
+      CloudinaryResponse res = await cloudinary.uploadFile(
+        CloudinaryFile.fromFile(image.path, folder: "designs"),
+      );
+      uploadedUrls.add(res.secureUrl);
+    }
+
+    return uploadedUrls;
+  } catch (e) {
+    showSnackBar(context, e.toString());
+    return [];
+  }
+}
 }

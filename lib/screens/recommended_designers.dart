@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylesyncapp/models/designer-model.dart';
-import 'package:stylesyncapp/screens/profile/designer_profile.dart';
-import 'package:stylesyncapp/widgets/designer_card.dart';
+import 'package:stylesyncapp/screens/profile/recommended_designer_profile.dart';
+import 'package:stylesyncapp/widgets/recommended_designer_card.dart';
 
 class RecommendedDesigners extends StatelessWidget {
   final List<dynamic> designers;
@@ -23,8 +22,7 @@ class RecommendedDesigners extends StatelessWidget {
           'Recommended Designers',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor:
-            const Color.fromARGB(255, 158, 119, 107), // Pastel brown
+        backgroundColor: const Color.fromARGB(255, 158, 119, 107),
       ),
       body: Column(
         children: [
@@ -34,23 +32,21 @@ class RecommendedDesigners extends StatelessWidget {
                 ? const Center(
                     child: Text(
                       'No recommendations found for you.',
-                      style:
-                          TextStyle(color: Color(0xFF6D4C41)), // Pastel brown
+                      style: TextStyle(color: Color(0xFF6D4C41)),
                     ),
                   )
                 : ListView.builder(
                     itemCount: designers.length,
                     itemBuilder: (context, index) {
-                      final designerData = designers[index];
-                      return DesignerCard(
-                        designerData: designerData,
+                      final designerData = designers[index]; 
+                      return RecommendedDesignerCard(
+                        designerData: designerData, 
                         onTap: () {
-                          final designer = Designer.fromMap(designerData);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  DesignerProfileScreen(designer: designer),
+                                  RecommendedDesignerProfileScreen(designer: designerData),
                             ),
                           );
                         },
@@ -63,8 +59,7 @@ class RecommendedDesigners extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF8EBC90),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -101,7 +96,7 @@ class _UserPreferencesCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: const Color(0xFFFBD4D4), // Pastel pink
+        color: const Color(0xFFFBD4D4),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(

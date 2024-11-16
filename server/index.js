@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const customerRouter = require("./routes/customer");
 const designerRouter = require("./routes/designer");
 const logoutRouter = require("./routes/logoutRoutes");
+const productRouter = require("./routes/product");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(customerRouter);
 app.use(designerRouter);
 app.use(logoutRouter);
+app.use(productRouter);
 
 //Connections
 mongoose

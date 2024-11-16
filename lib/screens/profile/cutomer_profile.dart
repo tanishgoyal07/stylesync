@@ -19,10 +19,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
   void handleLogout() async {
     try {
       final customerData = await SharedPrefsHelper.getCustomerData();
-      final token = customerData!['token'];
-      if (token != null) {
-        await AuthService().logout(token);
+
+      if (customerData != null) {
+        final token = customerData['token'];
+        if (token != null) {
+          await AuthService().logout(token);
+        }
       }
+
       await SharedPrefsHelper.clearUserData();
 
       Navigator.pushAndRemoveUntil(
@@ -30,6 +34,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
         MaterialPageRoute(builder: (context) => BottomBar()),
         (route) => false,
       );
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Logged out successfully'),
