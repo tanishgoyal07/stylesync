@@ -26,6 +26,10 @@ mongoose
     console.log(e);
   });
 
+app.get("/", (req, res) => {
+  res.json({message: "Hello world from backend"});
+})
+
 app.listen(PORT, "0.0.0.0" , () => {
   console.log(`connected at port ${PORT}`);
 });
