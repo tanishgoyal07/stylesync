@@ -3,4 +3,4 @@ flask_cors
 numpy
 pandas
 surprise
-pearsonr
+scipy==1.5.4
