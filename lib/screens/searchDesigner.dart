@@ -50,6 +50,7 @@ class _SearchDesignerScreenState extends State<SearchDesignerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
