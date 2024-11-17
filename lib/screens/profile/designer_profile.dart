@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/models/designer-model.dart';
 import 'package:stylesyncapp/screens/bottombar.dart';
+import 'package:stylesyncapp/screens/chat_designer_screen.dart';
 import 'package:stylesyncapp/services/auth_services.dart';
 import 'package:stylesyncapp/services/image_service.dart';
 import 'package:stylesyncapp/services/local_storage.dart';
@@ -188,30 +189,41 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              widget.isLoggedInDesigner == true
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8EBC90),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: handleLogout,
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Container(),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF8EBC90),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {
+                    widget.isLoggedInDesigner == true
+                        ? handleLogout()
+                        : widget.designer.availability == 'Yes' ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatDesignerScreen(
+                                name: widget.designer.name,
+                              ),
+                            ),
+                          ) : ();
+                  },
+                  child: Text(
+                    widget.isLoggedInDesigner == true
+                        ? 'Logout'
+                        : widget.designer.availability == 'Yes' ? 'Chat with Designer' : 'Designer not available',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

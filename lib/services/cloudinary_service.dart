@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
+import 'package:stylesyncapp/utils/constants.dart';
 import 'package:stylesyncapp/utils/showSnackBar.dart';
 
 class CloudinaryService {
-  final String uploadPreset = "cswcpjyp"; 
-  final String cloudName = "dqnso8uuy";
-
   Future<String> uploadImage(BuildContext context, File image) async {
     try {
       final cloudinary = CloudinaryPublic(cloudName, uploadPreset);

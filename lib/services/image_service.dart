@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:stylesyncapp/utils/constants.dart';
 
 class ImageService {
-  static const String unsplashApiKey = "Elx6BpRN9xJxVcHhlQ54SAX6d_80VyslaM5uVVQymoI";
-
   Future<List<String>> fetchImagesForCategory(String category) async {
     final url =
         "https://api.unsplash.com/search/photos?query=$category+clothing&per_page=5&client_id=$unsplashApiKey";
