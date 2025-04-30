@@ -1,9 +1,10 @@
-const String mainURL = 'http://192.168.1.110';
+// const String mainURL = 'http://192.168.1.110';
+const String mainURL = 'https://stylesync-e6j1.onrender.com';
 const String collabURL = 'https://9bf8-34-91-120-217.ngrok-free.app';
 
 const String recommendationURL = '$mainURL:5000/recommend';
-const String serverURL = '$mainURL:3000';
-const String baseUrl = '$mainURL:3000/api/chats';
+const String serverURL = mainURL;
+const String baseUrl = '$mainURL/api/chats';
 
 const String uploadPreset = "cswcpjyp"; 
 const String cloudName = "dqnso8uuy";
