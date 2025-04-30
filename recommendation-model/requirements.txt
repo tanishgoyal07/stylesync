@@ -1,7 +1,7 @@
-surprise
-scipy==1.5.4
-Flask==2.2.5
 flask-cors==3.0.10
 pandas==1.5.3
 scikit-learn==1.2.2
-numpy==1.23.5
+scikit-surprise==1.1.1
+scipy==1.5.4
+numpy==1.19.5
+Flask==2.2.5
