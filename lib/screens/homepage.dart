@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stylesyncapp/screens/auth/signup_screen.dart';
 import 'package:stylesyncapp/services/local_storage.dart';
 
+late Map<String, dynamic> loggedInUserData;
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -11,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isLoggedIn = false;
-
+  
   @override
   void initState() {
     super.initState();
@@ -23,12 +25,14 @@ class _HomePageState extends State<HomePage> {
       final customerData = await SharedPrefsHelper.getCustomerData();
       if (customerData != null) {
         setState(() {
+          loggedInUserData = customerData;
           isLoggedIn = true;
         });
       } else {
         final designerData = await SharedPrefsHelper.getDesignerData();
         if (designerData != null) {
           setState(() {
+            loggedInUserData = designerData;
             isLoggedIn = true;
           });
         }

@@ -1,34 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:stylesyncapp/models/customer-model.dart';
 import 'package:stylesyncapp/models/designer-model.dart';
 import 'package:stylesyncapp/screens/bottombar.dart';
 import 'package:stylesyncapp/screens/chat/chat_with_designer_screen.dart.dart';
-import 'package:stylesyncapp/screens/chat/chats_screen.dart';
 import 'package:stylesyncapp/services/auth_services.dart';
 import 'package:stylesyncapp/services/image_service.dart';
 import 'package:stylesyncapp/services/local_storage.dart';
 import 'package:stylesyncapp/widgets/detail-item.dart';
 import 'package:stylesyncapp/widgets/portfolio_carousel.dart';
 
-class DesignerProfileScreen extends StatefulWidget {
+class SearchedDesignerProfileScreen extends StatefulWidget {
   final Designer designer;
+  bool? isLoggedInDesigner;
 
-  DesignerProfileScreen({
+  SearchedDesignerProfileScreen({
     super.key,
     required this.designer,
+    this.isLoggedInDesigner,
   });
 
   @override
-  State<DesignerProfileScreen> createState() => _DesignerProfileScreenState();
+  State<SearchedDesignerProfileScreen> createState() =>
+      _SearchedDesignerProfileScreenState();
 }
 
-class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
+class _SearchedDesignerProfileScreenState
+    extends State<SearchedDesignerProfileScreen> {
   Future<Map<String, List<String>>>? portfolioImages;
+  Map<String, dynamic>? userData;
+  String currentUserId = "";
+  String currentUserName = "";
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
     portfolioImages = fetchPortfolioImages();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final customerData = await SharedPrefsHelper.getCustomerData();
+      if (customerData != null) {
+        setState(() {
+          userData = customerData['customer'];
+          currentUserId = userData?['id'];
+          currentUserName = userData?['name'];
+        });
+      } else {
+        final designerData = await SharedPrefsHelper.getDesignerData();
+        if (designerData != null) {
+          setState(() {
+            userData = designerData['designer'];
+            currentUserId = userData?['id'];
+            currentUserName = userData?['name'];
+          });
+        }
+      }
+      print("heyy2");
+      print(currentUserId);
+      print(currentUserName);
+    } catch (e) {
+      print("Error loading user data: $e");
+    }
   }
 
   Future<Map<String, List<String>>> fetchPortfolioImages() async {
@@ -89,29 +122,6 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
           style: const TextStyle(color: Colors.white),
           overflow: TextOverflow.ellipsis,
         ),
-        actions: [
-          IconButton(
-            padding: const EdgeInsets.only(
-              right: 10,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatsScreen(
-                    currentUserId: widget.designer.id,
-                    currentUserName: widget.designer.name,
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.chat_rounded,
-            ),
-            color: Colors.white,
-            iconSize: 18,
-          )
-        ],
         backgroundColor: const Color(0xFF8D6E63),
       ),
       body: SingleChildScrollView(
@@ -224,11 +234,29 @@ class _DesignerProfileScreenState extends State<DesignerProfileScreen> {
                     ),
                   ),
                   onPressed: () {
-                    handleLogout();
+                    widget.isLoggedInDesigner == true
+                        ? handleLogout()
+                        : widget.designer.availability == 'Yes'
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatWithDesignerScreen(
+                                    currentUserId: currentUserId,
+                                    currentUserName: currentUserName,
+                                    otherUserId: widget.designer.id,
+                                    otherUserName: widget.designer.name,
+                                  ),
+                                ),
+                              )
+                            : ();
                   },
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
+                  child: Text(
+                    widget.isLoggedInDesigner == true
+                        ? 'Logout'
+                        : widget.designer.availability == 'Yes'
+                            ? 'Chat with Designer'
+                            : 'Designer not available',
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,

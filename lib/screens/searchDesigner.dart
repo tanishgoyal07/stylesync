@@ -1,7 +1,7 @@
 import 'dart:async'; // For debounce
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/models/designer-model.dart';
-import 'package:stylesyncapp/screens/profile/designer_profile.dart';
+import 'package:stylesyncapp/screens/profile/searched_designer_profile_screen.dart';
 import 'package:stylesyncapp/services/search_services.dart';
 import 'package:stylesyncapp/widgets/designer_card.dart';
 
@@ -153,7 +153,7 @@ class _SearchDesignerScreenState extends State<SearchDesignerScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                DesignerProfileScreen(designer: designer),
+                                SearchedDesignerProfileScreen(designer: designer),
                           ),
                         );
                       },

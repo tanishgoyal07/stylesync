@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class Customer {
+  final String id;
   final String name;
   final String imageUrl;
   final String email;
@@ -10,6 +11,7 @@ class Customer {
   final String gender;
 
   Customer({
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.email,
@@ -21,6 +23,7 @@ class Customer {
 
   factory Customer.fromMap(Map<String, dynamic> map) {
     return Customer(
+      id: map['id'] ?? map['_id'] ?? '', // to handle MongoDB _id
       name: map['name'] as String,
       imageUrl: map['imageUrl'] as String,
       email: map['email'] as String,
@@ -33,6 +36,7 @@ class Customer {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'imageUrl': imageUrl,
       'email': email,
@@ -48,6 +52,7 @@ class Customer {
   factory Customer.fromJson(String source) => Customer.fromMap(json.decode(source));
 
   Customer copyWith({
+    String? id,
     String? name,
     String? imageUrl,
     String? email,
@@ -57,6 +62,7 @@ class Customer {
     String? gender,
   }) {
     return Customer(
+      id: id ?? this.id,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
       email: email ?? this.email,

@@ -81,10 +81,10 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                 return GridView.builder(
                   padding: const EdgeInsets.all(8),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two items per row
+                    crossAxisCount: 2,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    childAspectRatio: 0.7, // Adjust aspect ratio for card size
+                    childAspectRatio: 0.7,
                   ),
                   itemCount: filteredProducts.length,
                   itemBuilder: (context, index) {

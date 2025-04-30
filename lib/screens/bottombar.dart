@@ -4,6 +4,7 @@ import 'package:stylesyncapp/screens/homepage.dart';
 import 'package:stylesyncapp/screens/product/product_screen.dart';
 import 'package:stylesyncapp/screens/profile/profile_screen.dart';
 import 'package:stylesyncapp/screens/searchDesigner.dart';
+import 'package:stylesyncapp/screens/virtual_try_on.dart';
 
 class BottomBar extends StatefulWidget {
   int passedIndex;
@@ -35,6 +36,7 @@ class _BottomBarState extends State<BottomBar> {
     const HomePage(),
     const FindYourDesigner(),
     const SearchDesignerScreen(),
+    VirtualTryOnScreen(),
     const ProductScreen(),
     const MyProfile(),
   ];
@@ -71,6 +73,13 @@ class _BottomBarState extends State<BottomBar> {
               color: Colors.black,
             ),
             label: 'Search Designer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.door_sliding_outlined,
+              color: Colors.black,
+            ),
+            label: 'Try-On',
           ),
           BottomNavigationBarItem(
             icon: Icon(

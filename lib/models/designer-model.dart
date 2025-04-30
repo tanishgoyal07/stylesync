@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class Designer {
+  final String id;
   final String name;
   final String imageUrl;
   final String availability;
@@ -14,6 +15,7 @@ class Designer {
   final String password;
 
   Designer({
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.availability,
@@ -29,6 +31,7 @@ class Designer {
 
   factory Designer.fromMap(Map<String, dynamic> map) {
     return Designer(
+      id: map['id'] ?? map['_id'] ?? '', // to handle MongoDB _id
       name: map['name'] as String? ?? 'Unknown',
       imageUrl: map['imageUrl'] as String? ?? '',
       availability: map['availability'] as String? ?? 'Not Available',
@@ -45,6 +48,7 @@ class Designer {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'imageUrl': imageUrl,
       'availability': availability,

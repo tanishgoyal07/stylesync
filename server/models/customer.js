@@ -1,6 +1,13 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const customerSchema = mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+    default: () => uuidv4(),
+  },
   name: {
     type: String,
     required: true,
@@ -35,7 +42,7 @@ const customerSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
-})
+});
 
-const Customer = mongoose.model('customers', customerSchema)
-module.exports = { Customer, customerSchema }
+const Customer = mongoose.model('customers', customerSchema);
+module.exports = { Customer, customerSchema };

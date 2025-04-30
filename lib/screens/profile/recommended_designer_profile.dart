@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/screens/bottombar.dart';
-import 'package:stylesyncapp/screens/chat_designer_screen.dart';
+import 'package:stylesyncapp/screens/chat/chat_with_designer_screen.dart.dart';
 import 'package:stylesyncapp/services/auth_services.dart';
 import 'package:stylesyncapp/services/image_service.dart';
 import 'package:stylesyncapp/services/local_storage.dart';
@@ -25,11 +25,39 @@ class RecommendedDesignerProfileScreen extends StatefulWidget {
 class _RecommendedDesignerProfileScreenState
     extends State<RecommendedDesignerProfileScreen> {
   Future<Map<String, List<String>>>? portfolioImages;
+  Map<String, dynamic>? userData;
+  String currentUserId = "";
+  String currentUserName = "";
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
     portfolioImages = fetchPortfolioImages();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final customerData = await SharedPrefsHelper.getCustomerData();
+      if (customerData != null) {
+        setState(() {
+          userData = customerData['customer'];
+          currentUserId = userData?['id'];
+          currentUserName = userData?['name'];
+        });
+      } else {
+        final designerData = await SharedPrefsHelper.getDesignerData();
+        if (designerData != null) {
+          setState(() {
+            userData = designerData['designer'];
+            currentUserId = userData?['id'];
+            currentUserName = userData?['name'];
+          });
+        }
+      }
+    } catch (e) {
+      print("Error loading user data: $e");
+    }
   }
 
   Future<Map<String, List<String>>> fetchPortfolioImages() async {
@@ -49,10 +77,10 @@ class _RecommendedDesignerProfileScreenState
 
   void handleLogout() async {
     try {
-      final customerData = await SharedPrefsHelper.getCustomerData();
+      final designerData = await SharedPrefsHelper.getDesignerData();
 
-      if (customerData != null) {
-        final token = customerData['token'];
+      if (designerData != null) {
+        final token = designerData['token'];
         if (token != null) {
           await AuthService().logout(token);
         }
@@ -199,7 +227,10 @@ class _RecommendedDesignerProfileScreenState
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF8EBC90),
+                    backgroundColor: widget.isLoggedInDesigner == true ||
+                            widget.designer['availability'] == 'Yes'
+                        ? const Color(0xFF8EBC90)
+                        : const Color(0xFFFFABAB),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(
@@ -213,8 +244,11 @@ class _RecommendedDesignerProfileScreenState
                             ? Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatDesignerScreen(
-                                    name: widget.designer['name'],
+                                  builder: (context) => ChatWithDesignerScreen(
+                                    currentUserId: currentUserId,
+                                    currentUserName: currentUserName,
+                                    otherUserId: widget.designer['id'],
+                                    otherUserName: widget.designer['name'],
                                   ),
                                 ),
                               )

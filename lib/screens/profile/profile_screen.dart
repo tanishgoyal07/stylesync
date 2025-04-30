@@ -146,7 +146,7 @@ class _MyProfileState extends State<MyProfile> {
     }
 
     return isDesigner
-        ? DesignerProfileScreen(designer: Designer.fromMap(userData!), isLoggedInDesigner: true,)
+        ? DesignerProfileScreen(designer: Designer.fromMap(userData!))
         : CustomerProfileScreen(customer: Customer.fromMap(userData!));
   }
 }

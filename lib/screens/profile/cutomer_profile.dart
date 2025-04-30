@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylesyncapp/models/customer-model.dart';
 import 'package:stylesyncapp/screens/bottombar.dart';
+import 'package:stylesyncapp/screens/chat/chats_screen.dart';
 import 'package:stylesyncapp/services/auth_services.dart';
 import 'package:stylesyncapp/services/local_storage.dart';
 import 'package:stylesyncapp/widgets/detail-item.dart';
@@ -62,6 +63,29 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
           style: const TextStyle(color: Colors.white),
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.only(
+              right: 10,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatsScreen(
+                    currentUserId: widget.customer.id,
+                    currentUserName: widget.customer.name,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.chat_rounded,
+            ),
+            color: Colors.white,
+            iconSize: 18,
+          )
+        ],
         backgroundColor: const Color(0xFF8D6E63),
       ),
       body: SingleChildScrollView(

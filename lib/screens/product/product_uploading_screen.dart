@@ -136,9 +136,9 @@ class _ProductUploadingScreenState extends State<ProductUploadingScreen> {
                 const SizedBox(height: 20),
                 buildTextField('Item Type', 'articleType'),
                 const SizedBox(height: 20),
-                buildTextField('Item description', 'description'),
+                buildTextField('Item Description', 'description'),
                 const SizedBox(height: 20),
-                buildTextField('Item price', 'price', isNumeric: true),
+                buildTextField('Item Price', 'price', isNumeric: true),
                 const SizedBox(height: 20),
                 buildImageUploadSection(context),
                 const SizedBox(height: 20),
@@ -245,29 +245,28 @@ class _ProductUploadingScreenState extends State<ProductUploadingScreen> {
   }
 
   Widget buildTextField(String label, String key, {bool isNumeric = false}) {
-  bool isDescriptionField = label == 'Item description';
+    bool isDescriptionField = label == 'Item Description';
 
-  return TextFormField(
-    decoration: InputDecoration(
-      prefixIcon: const Icon(Icons.account_circle),
-      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      labelText: label,
-      hintText: label,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.account_circle),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        labelText: label,
+        hintText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        filled: true,
+        fillColor: const Color(0xFFF8BBD0).withOpacity(0.2),
       ),
-      filled: true,
-      fillColor: const Color(0xFFF8BBD0).withOpacity(0.2),
-    ),
-    keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
-    validator: (value) {
-      if (value == null || value.isEmpty) return '$label is required';
-      return null;
-    },
-    onSaved: (value) => formData[key] = value!,
-    maxLines: isDescriptionField ? 5 : 1,
-    minLines: isDescriptionField ? 3 : 1,
-  );
-}
-
+      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+      validator: (value) {
+        if (value == null || value.isEmpty) return '$label is required';
+        return null;
+      },
+      onSaved: (value) => formData[key] = value!,
+      maxLines: isDescriptionField ? 5 : 1,
+      minLines: isDescriptionField ? 3 : 1,
+    );
+  }
 }
