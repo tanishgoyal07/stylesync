@@ -10,13 +10,9 @@ Login Page & New User Screen
 
 ![{8A634D1E-D2FA-4743-9990-B4EA7DB29DE4}](https://github.com/user-attachments/assets/0706bd87-c71a-42b0-8f42-73c68b88e584)
 
-Customer Signup
+Customer Signup            Home Page
 
-![{D9A7551D-4200-4631-A2FB-7DED36B154C5}](https://github.com/user-attachments/assets/a848689b-fbaf-41a0-a630-fb34f3999c51)
-
-Home Page
-
-![{9A61C7A4-1802-487E-94E1-7B2AAA428669}](https://github.com/user-attachments/assets/91f01171-1a6c-4b26-99b5-86998fdca3b4)
+![{D9A7551D-4200-4631-A2FB-7DED36B154C5}](https://github.com/user-attachments/assets/a848689b-fbaf-41a0-a630-fb34f3999c51)    ![{9A61C7A4-1802-487E-94E1-7B2AAA428669}](https://github.com/user-attachments/assets/91f01171-1a6c-4b26-99b5-86998fdca3b4)
 
 Form For Dress Designing
 
