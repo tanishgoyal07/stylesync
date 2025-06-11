@@ -1,4 +1,4 @@
-![{78E33FFC-214F-41B3-B813-0A36D87ED89A}](https://github.com/user-attachments/assets/99db070f-81ff-4f05-9ae7-c7a083060e2b)# StyleSync
+# StyleSync
 
 # Mobile Application Screenshots
 
@@ -18,11 +18,23 @@ Home Page
 
 ![{9A61C7A4-1802-487E-94E1-7B2AAA428669}](https://github.com/user-attachments/assets/91f01171-1a6c-4b26-99b5-86998fdca3b4)
 
-![{78E33FFC-214F-41B3-B813-0A36D87ED89A}](https://github.com/user-attachments/assets/75ca2e18-f0bb-496e-805a-7b3197646a4c)
+Form For Dress Designing
 
-![{822A0734-8620-4D1E-AF86-E468FB92ACCB}](https://github.com/user-attachments/assets/3ae7ee56-928b-4837-b7b6-64fa216a0efa) ![{0F1DCFE3-2ECA-4D98-AE09-64DD6D82CD23}](https://github.com/user-attachments/assets/a929e718-8e50-4b11-814f-e025ac7841a3)
+![{3D1D0449-8B1C-4863-B200-8FA4433CCA7E}](https://github.com/user-attachments/assets/a9e6b788-7137-4139-b073-8918f16b4053)
+
+Recommended Designers & their Protfolio
+
+![{5FD0B3AE-8585-4347-A716-2DCEBD551CC2}](https://github.com/user-attachments/assets/0207e519-e871-4f49-80ba-f044093d3148)
+
+Work Experience of Designer
+
+![{0F1DCFE3-2ECA-4D98-AE09-64DD6D82CD23}](https://github.com/user-attachments/assets/a929e718-8e50-4b11-814f-e025ac7841a3)
+
+Search Filter and Designer Portfolio
 
 ![{8E6E02DF-FA6E-45A5-9060-CF82F37C4882}](https://github.com/user-attachments/assets/877e5a58-09b4-4e7d-b852-7e58377c2172)
+
+Explore various Products by Designers
 
 ![{4490D3F3-D73B-446B-84B4-30ABAD9B557E}](https://github.com/user-attachments/assets/83ea64bb-5d3f-443e-af8e-d04736fa07da)
 
