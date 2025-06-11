@@ -2,11 +2,21 @@
 
 # Mobile Application Screenshots
 
+Splash Screen & Sliders
+
 ![{F24808C2-A388-4037-ADF0-1C524C408A43}](https://github.com/user-attachments/assets/554e5860-4dc3-4658-9947-3a3b8d7e7ffa)
+
+Login Page & New User Screen
 
 ![{8A634D1E-D2FA-4743-9990-B4EA7DB29DE4}](https://github.com/user-attachments/assets/0706bd87-c71a-42b0-8f42-73c68b88e584)
 
-![{8E258A51-5C2A-4D9E-BB1C-3BD68EA36ADC}](https://github.com/user-attachments/assets/20492942-5b42-4360-ab62-50af489dc1d0)
+Customer Signup
+
+![{D9A7551D-4200-4631-A2FB-7DED36B154C5}](https://github.com/user-attachments/assets/a848689b-fbaf-41a0-a630-fb34f3999c51)
+
+Home Page
+
+![{9A61C7A4-1802-487E-94E1-7B2AAA428669}](https://github.com/user-attachments/assets/91f01171-1a6c-4b26-99b5-86998fdca3b4)
 
 ![{78E33FFC-214F-41B3-B813-0A36D87ED89A}](https://github.com/user-attachments/assets/75ca2e18-f0bb-496e-805a-7b3197646a4c)
 
